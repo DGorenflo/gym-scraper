@@ -1,0 +1,36 @@
+name: Scrape Fitness Data
+
+on:
+  push:
+  workflow_dispatch: # Erlaubt manuellen Start zum Testen
+  schedule:
+    - cron: '*/10 * * * *'  # Läuft alle 20 Minuten
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run scraper
+        run: main.py
+
+      - name: Commit and push if content changed
+        run: |-
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Latest data: $(date)" || exit 0
+          git push
