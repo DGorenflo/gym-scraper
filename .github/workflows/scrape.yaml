@@ -25,7 +25,7 @@ jobs:
         run: pip install requests
 
       - name: Run scraper
-        run: main.py
+        run: python main.py
 
       - name: Commit and push if content changed
         run: |-
