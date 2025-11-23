@@ -2,9 +2,9 @@ name: Scrape Fitness Data
 
 on:
   push:
-  workflow_dispatch: # Erlaubt manuellen Start zum Testen
+  workflow_dispatch: 
   schedule:
-    - cron: '*/10 * * * *'  # Läuft alle 20 Minuten
+    - cron: '*/10 * * * *'  # runs every 10mins
 
 permissions:
   contents: write
