@@ -2,6 +2,7 @@ import requests
 import json
 from datetime import datetime
 import os
+import pytz
 
 API_URL = "https://www.ai-fitness.de/connect/v1/studio/1360175120/utilization"
 LOG_FILE = "fitness_history.jsonl"
@@ -25,8 +26,11 @@ def fetch_and_save():
                 break
         
         if current_load is not None:
+            berlin_tz = pytz.timezone('Europe/Berlin')
+            
+            now_berlin = datetime.now(berlin_tz)
             entry = {
-                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "timestamp": now_berlin.strftime("%Y-%m-%d %H:%M:%S"),
                 "occupancy_percentage": current_load
             }
             
