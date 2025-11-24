@@ -74,10 +74,6 @@ def get_time_information():
         "timestamp": berlin_time.strftime("%Y-%m-%d %H:%M:%S")
     }
 
-from datetime import datetime, timedelta
-import json
-from file_read_backwards import FileReadBackwards
-
 def get_data_history(filename, days=1):
     today = datetime.now().date()
     target_date = today - timedelta(days=days)
@@ -126,7 +122,7 @@ def write_log(entry):
 async def main():
     # Now you can use await
     print("Waiting for jitter...")
-    await asyncio.sleep(randrange(1, 60)) 
+    await asyncio.sleep(randrange(600, 660))
     
     entry = get_current_weather(47.6516, 9.4779) | fetch_gym_utilization() | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
     
@@ -134,5 +130,5 @@ async def main():
     print("Log written.")
 
 if __name__ == "__main__":
-    # 2. Start the event loop
-    asyncio.run(main())
+    while True:
+        asyncio.run(main())
