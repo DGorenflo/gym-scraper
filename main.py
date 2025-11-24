@@ -1,5 +1,7 @@
+import asyncio
 from datetime import datetime, timedelta
 from pprint import pprint
+from random import randrange
 import requests
 import json
 import pytz
@@ -8,7 +10,7 @@ from dotenv import load_dotenv
 from file_read_backwards import FileReadBackwards
 
 API_URL = "https://www.ai-fitness.de/connect/v1/studio/1360175120/utilization"
-LOG_FILE = "fitness_history.jsonl"
+LOG_FILE = "data/data.jsonl"
 
 load_dotenv()
 
@@ -121,7 +123,16 @@ def write_log(entry):
 
 
 
-if __name__ == "__main__":
+async def main():
+    # Now you can use await
+    print("Waiting for jitter...")
+    await asyncio.sleep(randrange(1, 60)) 
+    
     entry = get_current_weather(47.6516, 9.4779) | fetch_gym_utilization() | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
+    
     write_log(entry)
+    print("Log written.")
 
+if __name__ == "__main__":
+    # 2. Start the event loop
+    asyncio.run(main())
