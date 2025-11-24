@@ -68,7 +68,8 @@ def get_time_information():
     return {
         "time": berlin_time.strftime("%H:%M:%S"),
         "month": berlin_time.month,          
-        "weekday": berlin_time.isoweekday()   
+        "weekday": berlin_time.isoweekday(),
+        "timestamp": berlin_time.strftime("%Y-%m-%d %H:%M:%S")
     }
 
 from datetime import datetime, timedelta
@@ -115,11 +116,12 @@ def get_occupancy_avg(data):
 def write_log(entry):
     with open(LOG_FILE, "a", encoding='utf-8') as f:
         f.write(json.dumps(entry) + "\n")
-    print(f"Saved: {entry}")
+    print("Logged entry:")    
+    pprint(entry)
 
 
 
 if __name__ == "__main__":
     entry = get_current_weather(47.6516, 9.4779) | fetch_gym_utilization() | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
-    pprint(entry)
-    #write_log(entry) 
+    write_log(entry)
+

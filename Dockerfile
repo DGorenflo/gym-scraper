@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy script
-COPY main.py .
+COPY . .
 
 # Run the script
-CMD ["python", "fitness_tracker.py"]
+CMD ["sh", "-c", "while true; do python main.py; sleep 600; done"]
