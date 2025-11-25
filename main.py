@@ -123,7 +123,7 @@ def write_log(entry):
 async def main():
     # Now you can use await
     print("Waiting for jitter...")
-    await asyncio.sleep(randrange(3, 10))
+    await asyncio.sleep(randrange(500, 600))
     
     entry = get_current_weather(47.6516, 9.4779) | fetch_gym_utilization() | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
     
