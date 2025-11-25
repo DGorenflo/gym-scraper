@@ -48,6 +48,7 @@ def fetch_gym_utilization():
 
 def get_current_weather(lat,lon):
     api_key = os.environ.get("WEATHER_API_KEY")
+    print(api_key)
     keys_to_keep = ['temp_c', 'precip_mm', 'wind_kph']
 
     url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={lat},{lon}&aqi=no"
@@ -122,7 +123,7 @@ def write_log(entry):
 async def main():
     # Now you can use await
     print("Waiting for jitter...")
-    await asyncio.sleep(randrange(600, 660))
+    await asyncio.sleep(randrange(3, 10))
     
     entry = get_current_weather(47.6516, 9.4779) | fetch_gym_utilization() | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
     

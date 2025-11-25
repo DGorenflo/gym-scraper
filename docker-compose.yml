@@ -1,0 +1,6 @@
+services:
+  gym-scraper:
+    build: .
+    env_file: .env
+    volumes:
+      - ./data:/app/data:rw
