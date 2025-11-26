@@ -124,8 +124,14 @@ async def main():
     # Now you can use await
     print("Waiting for jitter...")
     await asyncio.sleep(randrange(500, 600))
-    
-    entry = get_current_weather(47.6516, 9.4779) | fetch_gym_utilization() | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
+
+    gym_utilization = fetch_gym_utilization()
+
+    if gym_utilization is None:
+        print("Gym is closed or data fetch failed. Exiting.")
+        return
+
+    entry = get_current_weather(47.6516, 9.4779) | gym_utilization | get_time_information() | get_occupancy_avg(get_data_history(LOG_FILE, days=1))
     
     write_log(entry)
     print("Log written.")
